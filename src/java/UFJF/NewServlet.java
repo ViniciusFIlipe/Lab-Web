@@ -12,7 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-@WebServlet(urlPatterns = {"/index.html"})
+
+@WebServlet(urlPatterns = {"/NewServlet.html"})
 
 public class NewServlet extends HttpServlet {
 
@@ -22,19 +23,34 @@ public class NewServlet extends HttpServlet {
         String aplicacao = (String) this.getServletContext().getInitParameter("aplicacao");
         String url = (String) this.getInitParameter("url");
         try (PrintWriter out = response.getWriter()) {
-
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet NewServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Exercicio 1</h1>");
-            // out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
-            out.println("<p>Aplicacao: " + aplicacao + " URL:" + url + "</p>");
-            out.println("</body>");
-            out.println("</html>");
+            String usuario = request.getParameter("usuario");
+            String senha = request.getParameter("senha");
+            if ("123".equals(senha)) {
+                /* TODO output your page here. You may use following sample code. */
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Servlet NewServlet</title>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h1>Bem Vindo " + usuario + "</h1>");
+                //out.println("<p>Aplicacao: " + aplicacao + " URL:" + url + "</p>");
+                out.println("<a href=\"http://localhost:8080/Lab-Web/\">Voltar</a>");
+                out.println("</body>");
+                out.println("</html>");
+            } else {/* TODO output your page here. You may use following sample code. */
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Servlet NewServlet</title>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h1>Exercicio 1</h1>");
+                out.println("<p>Usuario ou senha inválido</p>");
+                out.println("<a href=\"http://localhost:8080/Lab-Web/\">Voltar</a>");
+                out.println("</body>");
+                out.println("</html>");
+            }
         }
     }
 
@@ -47,6 +63,7 @@ public class NewServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         processRequest(request, response);
     }
 

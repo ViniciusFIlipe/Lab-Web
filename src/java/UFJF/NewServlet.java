@@ -38,6 +38,7 @@ public class NewServlet extends HttpServlet {
                 out.println("<a href=\"http://localhost:8080/Lab-Web/\">Voltar</a>");
                 out.println("</body>");
                 out.println("</html>");
+               response.sendRedirect(request.getContextPath()+"/menu.html");
             } else {/* TODO output your page here. You may use following sample code. */
                 out.println("<!DOCTYPE html>");
                 out.println("<html>");

@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,8 +29,8 @@ public class NewServlet extends HttpServlet {
         String aplicacao = (String) this.getServletContext().getInitParameter("aplicacao");
         String url = (String) this.getInitParameter("url");
 
-        String usuario1 = (String)request.getParameter("usuario");
-        String senha1 = (String)request.getParameter("senha");
+        String usuario1 = (String) request.getParameter("usuario");
+        String senha1 = (String) request.getParameter("senha");
         try (PrintWriter out = response.getWriter()) {
 
             String JDBC_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
@@ -48,28 +49,15 @@ public class NewServlet extends HttpServlet {
                 String sql;
                 sql = "SELECT usuario, senha FROM usuarios where upper(usuario) ='" + usuario1.toUpperCase() + "' and senha='" + senha1 + "'";
                 ResultSet rs = stmt.executeQuery(sql);
-                rs.next();
-                System.out.println(rs.getString("senha"));
-                String senha =(String) rs.getString("senha");
-                String usuario =(String) rs.getString("usuario");
-                boolean result;
-
-// Extract data from result set
-                if (usuario == usuario1 && senha == senha1) {
-
-                    /* TODO output your page here. You may use following sample code. */
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Servlet NewServlet</title>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h1>Bem Vindo " + usuario + "</h1>");
-                    //out.println("<p>Aplicacao: " + aplicacao + " URL:" + url + "</p>");
-                    out.println("<a href=\"http://localhost:8080/Lab-Web/\">Voltar</a>");
-                    out.println("</body>");
-                    out.println("</html>");
-                    response.sendRedirect(request.getContextPath() + "/menu.html");
+                //rs.next();
+                // System.out.println(rs.getString("senha"));
+                //String senha = (String) rs.getString("senha");
+              
+                if (rs.next()) {
+                    
+                    RequestDispatcher dispatcher  = request.getRequestDispatcher("menu.html");
+                    dispatcher.forward(request, response);
+                    // response.sendRedirect(request.getContextPath() + "/menu.html");
                 } else {/* TODO output your page here. You may use following sample code. */
                     out.println("<!DOCTYPE html>");
                     out.println("<html>");
@@ -87,6 +75,8 @@ public class NewServlet extends HttpServlet {
                 rs.close();
                 stmt.close();
                 conn.close();
+// Extract data from result set
+
             } catch (SQLException e) {
 //Handle errors for JDBC
 //throw new ServletException(e);

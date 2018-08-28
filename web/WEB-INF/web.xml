@@ -6,7 +6,7 @@
     </context-param>
     <servlet>
         <servlet-name>NewServlet</servlet-name>
-        <servlet-class>UFJF.NewServlet</servlet-class>
+        <servlet-class>UFJF.Valida</servlet-class>
         <init-param>
             <param-name>url</param-name>
             <param-value>www.ufjf.br</param-value>

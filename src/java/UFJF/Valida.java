@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(urlPatterns = {"/NewServlet.html"})
 
-public class NewServlet extends HttpServlet {
+public class Valida extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -31,6 +31,7 @@ public class NewServlet extends HttpServlet {
 
         String usuario1 = (String) request.getParameter("usuario");
         String senha1 = (String) request.getParameter("senha");
+        
         try (PrintWriter out = response.getWriter()) {
 
             String JDBC_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
@@ -52,10 +53,10 @@ public class NewServlet extends HttpServlet {
                 //rs.next();
                 // System.out.println(rs.getString("senha"));
                 //String senha = (String) rs.getString("senha");
-              
+
                 if (rs.next()) {
-                    
-                    RequestDispatcher dispatcher  = request.getRequestDispatcher("menu.html");
+
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("menu.html");
                     dispatcher.forward(request, response);
                     // response.sendRedirect(request.getContextPath() + "/menu.html");
                 } else {/* TODO output your page here. You may use following sample code. */
@@ -107,6 +108,21 @@ public class NewServlet extends HttpServlet {
             }
 
         }
+    }
+
+
+    public void Lista(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        PrintWriter out = response.getWriter();
+        Connection conn = null;
+        Statement comando = conn.createStatement();
+        ResultSet resultado = comando.executeQuery("SELECT usuario FROM usuarios");
+         while (resultado.next()) {
+             
+                out.println(resultado.getString("usuario")+"<br>"); 
+
+            }
+         resultado.close();
+            conn.close();
     }
 
     @Override

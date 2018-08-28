@@ -34,6 +34,7 @@ public class MenuServlet extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Bem Vindo </h1>");
             out.println("<p>Esse é o menu: <p>");
+            out.println("<a href=\"http://localhost:8080/Lab-Web/lista.html\">Lista</a><BR>");
             out.println("<a href=\"google.com\">Google</a><BR>");
             out.println("<a href=\"ufjf.br\">UFJF</a><BR><BR><BR>");
             out.println("<a href=\"http://localhost:8080/Lab-Web/\">Voltar</a>");

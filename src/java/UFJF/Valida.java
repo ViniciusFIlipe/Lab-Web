@@ -18,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns = {"/NewServlet.html"})
 
@@ -26,12 +27,11 @@ public class Valida extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String aplicacao = (String) this.getServletContext().getInitParameter("aplicacao");
-        String url = (String) this.getInitParameter("url");
 
         String usuario1 = (String) request.getParameter("usuario");
         String senha1 = (String) request.getParameter("senha");
-        
+        HttpSession session = request.getSession(true);
+
         try (PrintWriter out = response.getWriter()) {
 
             String JDBC_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
@@ -39,13 +39,13 @@ public class Valida extends HttpServlet {
             Connection conn = null;
             Statement stmt = null;
             String resp = null;
-// Set response content type
+            // Set response content type
             try {
-// Register JDBC driver
+            // Register JDBC driver
                 Class.forName(JDBC_DRIVER);
-// Open a connection
+                // Open a connection
                 conn = DriverManager.getConnection("jdbc:derby://localhost:1527/lp04", "admin1", "admin");
-// Execute SQL query
+                // Execute SQL query
                 stmt = conn.createStatement();
                 String sql;
                 sql = "SELECT usuario, senha FROM usuarios where upper(usuario) ='" + usuario1.toUpperCase() + "' and senha='" + senha1 + "'";
@@ -55,11 +55,12 @@ public class Valida extends HttpServlet {
                 //String senha = (String) rs.getString("senha");
 
                 if (rs.next()) {
-
+                    session.setAttribute("login", true);
                     RequestDispatcher dispatcher = request.getRequestDispatcher("menu.html");
                     dispatcher.forward(request, response);
                     // response.sendRedirect(request.getContextPath() + "/menu.html");
                 } else {/* TODO output your page here. You may use following sample code. */
+                    session.setAttribute("login", false);
                     out.println("<!DOCTYPE html>");
                     out.println("<html>");
                     out.println("<head>");
@@ -110,20 +111,7 @@ public class Valida extends HttpServlet {
         }
     }
 
-
-    public void Lista(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        PrintWriter out = response.getWriter();
-        Connection conn = null;
-        Statement comando = conn.createStatement();
-        ResultSet resultado = comando.executeQuery("SELECT usuario FROM usuarios");
-         while (resultado.next()) {
-             
-                out.println(resultado.getString("usuario")+"<br>"); 
-
-            }
-         resultado.close();
-            conn.close();
-    }
+   
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

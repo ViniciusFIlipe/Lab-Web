@@ -12,85 +12,33 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ice
  */
-@WebServlet(name = "ServletContext", urlPatterns = {"/ServletContext"})
+@WebServlet(name = "ServletContext", urlPatterns = {"/sair.html"})
 public class ServletContext extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String JDBC_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
-        String DB_URL = "jdbc:derby://localhost:1527/lp5";
-
-        Connection conn = null;
-        Statement stmt = null;
-        String resp = null;
-// Set response content type
-        try {
-// Register JDBC driver
-            Class.forName(JDBC_DRIVER);
-// Open a connection
-            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/lp04", "admin1", "admin");
-// Execute SQL query
-            stmt = conn.createStatement();
-            String sql;
-            sql = "SELECT usuario, senha FROM usuarios where upper(nome) = '" +  "' and senha='"  + "'";
-            ResultSet rs = stmt.executeQuery(sql);
-// Extract data from result set
-            if (rs.next()) {
-            }
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-//Handle errors for JDBC
-//throw new ServletException(e);
-            resp = e.getMessage();
-            throw new ServletException(e);
-        } catch (Exception e) {
-//Handle errors for Class.forName
-//throw new ServletException(e);
-            resp = e.getMessage();
-            throw new ServletException(e);
-        } finally {
-            System.out.printf(resp);
-//finally block used to close resources
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-            } catch (SQLException e) {
-                throw new ServletException(e);
-            }// nothing we can do
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                throw new ServletException(e);
-            }//end finally try
-        }
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession(false);
+        //session.invalidate();
+        //  response.sendRedirect(request.getContextPath() + "/index.html");    
+         
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.html");
+        dispatcher.forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

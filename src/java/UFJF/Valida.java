@@ -30,7 +30,7 @@ public class Valida extends HttpServlet {
 
         String usuario1 = (String) request.getParameter("usuario");
         String senha1 = (String) request.getParameter("senha");
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(false);
 
         try (PrintWriter out = response.getWriter()) {
 
@@ -55,12 +55,14 @@ public class Valida extends HttpServlet {
                 //String senha = (String) rs.getString("senha");
 
                 if (rs.next()) {
+                    session = request.getSession(true);
                     session.setAttribute("login", true);
                     RequestDispatcher dispatcher = request.getRequestDispatcher("menu.html");
                     dispatcher.forward(request, response);
                     // response.sendRedirect(request.getContextPath() + "/menu.html");
                 } else {/* TODO output your page here. You may use following sample code. */
                     session.setAttribute("login", false);
+                    session.invalidate();
                     out.println("<!DOCTYPE html>");
                     out.println("<html>");
                     out.println("<head>");

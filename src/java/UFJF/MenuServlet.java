@@ -28,8 +28,9 @@ public class MenuServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
         boolean logado = (boolean) session.getAttribute("login");
-        try (PrintWriter out = response.getWriter()) {
-            if (logado == true) {
+        if (logado == true) {
+            try (PrintWriter out = response.getWriter()) {
+
                 /* TODO output your page here. You may use following sample code. */
                 out.println("<!DOCTYPE html>");
                 out.println("<html>");
@@ -39,17 +40,20 @@ public class MenuServlet extends HttpServlet {
                 out.println("<body>");
                 out.println("<h1>Bem Vindo </h1>");
                 out.println("<p>Esse é o menu: <p>");
+                out.println("<p>"+session.getId()+"<p>");
                 //out.println("<p>Esse é o menu: "+session.getAttribute("login")+"<p>");
                 out.println("<a href=\"http://localhost:8080/Lab-Web/lista.html\">Lista</a><BR>");
                 out.println("<a href=\"google.com\">Google</a><BR>");
                 out.println("<a href=\"ufjf.br\">UFJF</a><BR><BR><BR>");
-                out.println("<a href=\"http://localhost:8080/Lab-Web/\">Voltar</a>");
+                out.println("<a href=\"http://localhost:8080/Lab-Web/sair.html\">Voltar</a>");
                 out.println("</body>");
                 out.println("</html>");
-            }else{RequestDispatcher dispatcher = request.getRequestDispatcher("NewServlet.html");
-                    dispatcher.forward(request, response);}
-
+            }
+        } else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("index.html");
+            dispatcher.forward(request, response);
         }
+
     }
 
     @Override

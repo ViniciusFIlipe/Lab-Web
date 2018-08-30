@@ -61,7 +61,7 @@ public class ListarServlet extends HttpServlet {
             resultado.close();
             conn.close();
 
-            out.println("<a href=\"http://localhost:8080/Lab-Web/\">Voltar</a>");
+            out.println("<a href=\"http://localhost:8080/Lab-Web/menu.html\">Voltar</a>");
             out.println("</body>");
             out.println("</html>");
         }

@@ -6,12 +6,6 @@
 package UFJF;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,15 +19,15 @@ import javax.servlet.http.HttpSession;
  * @author ice
  */
 @WebServlet(name = "ServletContext", urlPatterns = {"/sair.html"})
-public class ServletContext extends HttpServlet {
+public class Sair extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(false);
-        //session.invalidate();
+//        session.invalidate();
         //  response.sendRedirect(request.getContextPath() + "/index.html");    
-         
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("index.html");
         dispatcher.forward(request, response);
     }

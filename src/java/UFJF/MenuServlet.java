@@ -45,6 +45,7 @@ public class MenuServlet extends HttpServlet {
                 out.println("<a href=\"http://localhost:8080/Lab-Web/lista.html\">Lista</a><BR>");
                 out.println("<a href=\"google.com\">Google</a><BR>");
                 out.println("<a href=\"ufjf.br\">UFJF</a><BR><BR><BR>");
+                session.invalidate();
                 out.println("<a href=\"http://localhost:8080/Lab-Web/sair.html\">Voltar</a>");
                 out.println("</body>");
                 out.println("</html>");

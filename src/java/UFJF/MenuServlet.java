@@ -28,6 +28,7 @@ public class MenuServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
         boolean logado = (boolean) session.getAttribute("login");
+        //verificar se a sessao ta ativa
         if (logado == true) {
             try (PrintWriter out = response.getWriter()) {
 
